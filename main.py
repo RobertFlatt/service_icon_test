@@ -5,6 +5,7 @@ from kivy.clock import Clock
 from jnius import autoclass
 from oscpy.client import OSCClient
 from oscpy.server import OSCThreadServer
+from android_permissions import AndroidPermissions
 if platform == 'android':
     from android import mActivity
     from jnius import autoclass
@@ -57,6 +58,10 @@ class StickyForeground(App):
             self.root.ids.label.text += '\n'
         else:
             self.root.ids.label.text = '\n\nAndroid ONLY'
+        self.dont_gc = AndroidPermissions(self.start_app)  
+
+    def start_app(self):
+        self.dont_gc = None            
             
     ##################
     # Start a service
